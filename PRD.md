@@ -1,118 +1,118 @@
 # PRD — "let's Try My Luck" · Personal Job Tracker
 
-**Versi:** 1.0 (draft)
-**Status:** Untuk direview
-**Tipe produk:** Personal web app (single-user)
+**Version:** 1.0 (draft)
+**Status:** For review
+**Product type:** Personal web app (single-user)
 **Owner:** Irfan Prima Putra
-**Terakhir diperbarui:** 2026-11-25
+**Last updated:** 2026-11-25
 
 ---
 
-## 1. Ringkasan
+## 1. Summary
 
-"let's Try My Luck" adalah aplikasi web personal untuk melacak lamaran kerja — mulai dari menemukan lowongan, mengirim CV, sampai tahu hasil akhirnya. Saat ini data hidup di satu database Notion (`let's Try My Luck`) berisi 56 perusahaan dan 26 lamaran (periode Jan–Feb 2024).
+"let's Try My Luck" is a personal web application for tracking job applications — from finding a listing, sending a CV, through to knowing the final outcome. Today the data lives in a single Notion database (`let's Try My Luck`) holding 56 companies and 26 applications (Jan–Feb 2024).
 
-Aplikasi ini mengubah tracker Notion yang pasif menjadi alat kerja yang aktif: pipeline yang jelas, analitik channel mana yang benar-benar menghasilkan, dan pengingat follow-up supaya lamaran tidak menggantung tanpa kabar.
+This application turns a passive Notion tracker into an active working tool: a clear pipeline, analytics on which channels actually produce results, and follow-up reminders so applications stop hanging without news.
 
-### Masalah yang diselesaikan
+### Problems solved
 
-1. **Tidak ada gambaran funnel.** Saat ini status hanya berupa teks bebas; susah tahu berapa yang masih menggantung vs ditolak vs lolos.
-2. **Channel tidak terukur.** Dari data lama: semua 7 penolakan datang via Techinasia, sedangkan 2 "Approved" justru dari website perusahaan — tapi insight ini tidak kelihatan tanpa analisis manual.
-3. **Lamaran menggantung.** 17 dari 26 lamaran masih "Sent CV" tanpa tindak lanjut; tidak ada sistem pengingat.
-4. **Skema data berantakan.** Kolom "Industri" salah opsi, "Overal State" kosong semua, ada baris kosong dan typo.
-5. **Input lambat.** Menambah lamaran di Notion butuh banyak klik dan mengetik ulang.
-
----
-
-## 2. Tujuan & Non-Tujuan
-
-### Tujuan (Goals)
-- **G1** — Satu tempat untuk mencatat, memfilter, dan melihat semua lamaran dengan cepat (input < 30 detik per lamaran).
-- **G2** — Pipeline status yang jelas dan konsisten, menggantikan status teks bebas.
-- **G3** — Dashboard analitik yang menjawab: *channel mana yang paling efektif, berapa response rate, lamaran mana yang perlu di-follow up.*
-- **G4** — Migrasi mulus dari Notion tanpa kehilangan data.
-- **G5** — Bisa diakses cepat di desktop maupun HP (job hunting sering di HP).
-
-### Non-Tujuan (Non-Goals) — untuk MVP
-- Bukan multi-user / SaaS. Tidak ada tim, sharing, atau billing.
-- Bukan job board. Tidak menarik lowongan otomatis dari internet.
-- Tidak membuat/mengirim lamaran otomatis ke perusahaan.
-- Tidak ada mobile native app (cukup web responsif + PWA di fase berikutnya).
-- Tidak ada AI resume tailoring di MVP (kandidat untuk fase 3).
+1. **No funnel visibility.** Today status is free text; it is hard to tell how many are hanging versus rejected versus progressing.
+2. **Channels are unmeasured.** From the legacy data: all 7 rejections came via Techinasia, while 2 "Approved" results came from company websites — but that insight is invisible without manual analysis.
+3. **Applications hang.** 17 of 26 applications are still "Sent CV" with no follow-up; there is no reminder system.
+4. **Messy data schema.** The "Industri" column has the wrong options, "Overal State" is empty everywhere, there are blank rows and typos.
+5. **Slow input.** Adding an application in Notion takes many clicks and retyping.
 
 ---
 
-## 3. Persona & Use Case Utama
+## 2. Goals & Non-Goals
 
-**Persona:** Job seeker tunggal (UI/UX Designer) yang melamar 10–30 lowongan dalam periode aktif, lintas channel (LinkedIn, JobStreet, Techinasia, website perusahaan, referral).
+### Goals
+- **G1** — One place to record, filter, and view every application quickly (input < 30 seconds per application).
+- **G2** — A clear, consistent status pipeline replacing free-text status.
+- **G3** — An analytics dashboard answering: *which channel is most effective, what is the response rate, which applications need follow-up.*
+- **G4** — Seamless migration from Notion with no data loss.
+- **G5** — Fast access on desktop and phone (job hunting often happens on the phone).
 
-**Use case inti:**
-- **UC1 — Catat lamaran baru:** saat lihat lowongan menarik, simpan ke wishlist; saat kirim CV, update jadi "Applied" dengan tanggal + channel.
-- **UC2 — Pantau pipeline:** buka board, lihat mana yang masih proses interview, mana yang perlu ditindak.
-- **UC3 — Follow up:** lihat daftar lamaran yang "stale" (>14 hari tanpa respons) dan lakukan follow-up.
-- **UC4 — Evaluasi strategi:** lihat conversion per channel/tipe perusahaan, putuskan harus fokus melamar ke mana.
-- **UC5 — Refleksi mingguan:** lihat berapa lamaran minggu ini, berapa respons yang masuk.
+### Non-Goals — for MVP
+- Not multi-user / SaaS. No teams, sharing, or billing.
+- Not a job board. Does not pull job listings from the internet automatically.
+- Does not create or submit applications to companies automatically.
+- No native mobile app (responsive web + PWA in a later phase is enough).
+- No AI resume tailoring in MVP (candidate for phase 3).
 
 ---
 
-## 4. Asumsi
+## 3. Persona & Primary Use Cases
 
-Karena scope belum didiskusikan, PRD ini memakai asumsi berikut (mohon dikoreksi bila tidak sesuai):
+**Persona:** A single job seeker (UI/UX Designer) applying to 10–30 roles in an active period, across channels (LinkedIn, JobStreet, Techinasia, company websites, referral).
 
-- **A1** — Single-user, data pribadi; autentikasi cukup sederhana (passkey/passphrase), bukan sistem akun kompleks.
-- **A2** — Web app responsif (desktop-first untuk tabel, mobile-friendly untuk input & board).
-- **A3** — Data lama diimpor sekali dari export Notion (CSV/JSON), bukan integrasi live ke Notion.
-- **A4** — Hosting cloud (Vercel + Postgres) agar bisa diakses dari mana saja; alternatif self-host didukung lewat export/backup.
-- **A5** — "Approved" pada data lama = lamaran lolos/diterima di tahap akhir; "Declined" = ditolak.
-- **A6** — Bahasa UI: Indonesia (dengan opsi Inggris di kemudian hari).
+**Core use cases:**
+- **UC1 — Record a new application:** when a listing looks interesting, save it to the wishlist; when the CV is sent, update it to "Applied" with a date and channel.
+- **UC2 — Monitor the pipeline:** open the board, see which are still in process, which need action.
+- **UC3 — Follow up:** see applications that are "stale" (>14 days without a response) and follow up.
+- **UC4 — Evaluate strategy:** see conversion per channel and per company type, and decide where to focus applications.
+- **UC5 — Weekly reflection:** see how many applications this week, how many responses came in.
+
+---
+
+## 4. Assumptions
+
+Because scope has not been discussed, this PRD uses the following assumptions (please correct if inaccurate):
+
+- **A1** — Single-user, personal data; authentication is simple enough (passkey/passphrase), not a complex account system.
+- **A2** — Responsive web app (desktop-first for tables, mobile-friendly for input and board).
+- **A3** — Legacy data is imported once from a Notion export (CSV/JSON), not a live Notion integration.
+- **A4** — Cloud hosting (Vercel + Postgres) so it is reachable from anywhere; a self-host alternative is supported via export/backup.
+- **A5** — "Approved" in the legacy data means the application passed to the final stage; "Declined" means rejected.
+- **A6** — UI language: Indonesian (with an English option later).
 
 ---
 
 ## 5. Scope
 
-### 5.1 MVP (Fase 1)
-- CRUD lamaran (create, read, update, archive/delete) + quick-add.
-- Model data baru: `Company`, `Application`, `Activity` (log).
-- Pipeline status + outcome terpisah.
-- **Table view** lengkap (filter, sort, group, inline edit, bulk action).
-- **Board (Kanban)** per tahap pipeline, drag-and-drop.
-- **Detail lamaran** (semua field + timeline aktivitas + catatan).
-- **Dashboard** dasar: KPI, funnel, conversion per channel, daftar follow-up.
-- **Import dari Notion** (CSV/JSON) dengan preview & mapping.
-- **Export** ke CSV/JSON (data ownership).
-- Search global + filter tersimpan (saved views).
-- Dark mode, responsif.
+### 5.1 MVP (Phase 1)
+- Application CRUD (create, read, update, archive/delete) + quick-add.
+- New data model: `Company`, `Application`, `Activity` (log).
+- Separate pipeline status and outcome.
+- Full **table view** (filter, sort, group, inline edit, bulk action).
+- **Board (Kanban)** per pipeline stage, drag-and-drop.
+- **Application detail** (all fields + activity timeline + notes).
+- **Dashboard** basics: KPIs, funnel, conversion per channel, follow-up list.
+- **Import from Notion** (CSV/JSON) with preview and mapping.
+- **Export** to CSV/JSON (data ownership).
+- Global search + saved filters (saved views).
+- Dark mode, responsive.
 
-### 5.2 Fase 2
-- Kalender (tanggal apply, jadwal interview, deadline challenge).
-- Pengingat/follow-up otomatis (in-app + email/notif).
-- Analytics lanjutan: time-to-response, time-to-offer, tren mingguan, per tipe/ukuran perusahaan.
-- Manajemen dokumen (versi CV, portofolio) + lampiran per lamaran.
+### 5.2 Phase 2
+- Calendar (apply date, interview schedule, challenge deadline).
+- Automatic reminders/follow-up (in-app + email/notification).
+- Advanced analytics: time-to-response, time-to-offer, weekly trends, per company type/size.
+- Document management (CV versions, portfolio) + attachments per application.
 - PWA (installable + offline read).
-- Multi-view: timeline & galeri kartu.
+- Multi-view: timeline and card gallery.
 
-### 5.3 Fase 3 (eksperimental)
-- Parsing JD otomatis dari URL lowongan (pre-fill form).
-- AI: saran tailoring CV/cover letter per JD.
-- Browser extension "simpan lowongan" sekali klik.
-- Multi-user opsional / share read-only.
+### 5.3 Phase 3 (experimental)
+- Automatic JD parsing from a job URL (form pre-fill).
+- AI: CV/cover letter tailoring suggestions per JD.
+- Browser extension "save job" in one click.
+- Optional multi-user / read-only sharing.
 
-### 5.4 Di luar scope
-Job scraping massal, auto-apply, integrasi ATS perusahaan, billing.
+### 5.4 Out of scope
+Mass job scraping, auto-apply, company ATS integrations, billing.
 
 ---
 
-## 6. Model Data
+## 6. Data Model
 
-### 6.1 Entitas
+### 6.1 Entities
 
 #### `Company`
-| Field | Tipe | Catatan |
+| Field | Type | Notes |
 |---|---|---|
 | id | uuid | PK |
-| name | text | unik (case-insensitive) |
+| name | text | unique (case-insensitive) |
 | website | text? | |
-| industry | enum? | **taksonomi industri yang benar** (bukan rating) — lihat 6.3 |
+| industry | enum? | **correct industry taxonomy** (not a rating) — see 6.3 |
 | company_type | enum? | Startup, Corporate, IT Service, Design Studio, Unicorn, Agency |
 | size | enum? | `1-100`, `100-1000`, `>1000` |
 | design_team_size | enum? | `1-30`, `31-50`, `>50` |
@@ -121,65 +121,65 @@ Job scraping massal, auto-apply, integrasi ATS perusahaan, billing.
 | created_at / updated_at | timestamptz | |
 
 #### `Application`
-| Field | Tipe | Catatan |
+| Field | Type | Notes |
 |---|---|---|
 | id | uuid | PK |
 | company_id | fk | → Company |
-| position | text | mis. "UI/UX Designer" |
+| position | text | e.g. "UI/UX Designer" |
 | position_type | enum? | UI, UX, UI/UX, Product, UX Research, Interaction |
-| job_url | text? | link lowongan |
-| source | enum? | **di mana info ditemukan**: LinkedIn, JobStreet, Techinasia, Glints, Kalibrr, Dealls, Website, Referral, Lainnya |
-| applied_via | enum? | **cara melamar**: Website, Email, LinkedIn Easy Apply, ATS, Referral, Lainnya |
-| found_date | date? | tanggal info lowongan |
-| applied_date | date? | tanggal kirim CV |
-| stage | enum | pipeline stage — lihat 6.2 |
-| outcome | enum | `active`, `rejected`, `offer`, `accepted`, `closed`, `withdrawn` — lihat 6.2 |
-| is_submitted | bool | derived dari `applied_date != null` |
-| salary_expectation | enum? | `Dibawah`, `Sesuai`, `Diatas` ekspektasi |
-| rating_branding | enum? | `Tidak Menarik`, `Menarik`, `Sangat Menarik` |
-| rating_product | enum? | idem |
-| rating_design | enum? | `Tidak OK`, `OK`, `Sangat OK` |
-| rating_vibe | enum? | idem `Tidak/Menarik/Sangat Menarik` |
-| overall_score | enum? | `Tidak Menarik`, `Perusahaan OK`, `Perusahaan Bagus`, `Perusahaan Impian` |
+| job_url | text? | listing link |
+| source | enum? | **where the info was found**: LinkedIn, JobStreet, Techinasia, Glints, Kalibrr, Dealls, Website, Referral, Other |
+| applied_via | enum? | **how the application was sent**: Website, Email, LinkedIn Easy Apply, ATS, Referral, Other |
+| found_date | date? | date the listing was found |
+| applied_date | date? | date the CV was sent |
+| stage | enum | pipeline stage — see 6.2 |
+| outcome | enum | `active`, `rejected`, `offer`, `accepted`, `closed`, `withdrawn` — see 6.2 |
+| is_submitted | bool | derived from `applied_date != null` |
+| salary_expectation | enum? | `Below`, `Matches`, `Above` expectation |
+| rating_branding | enum? | `Unattractive`, `Attractive`, `Very Attractive` |
+| rating_product | enum? | same |
+| rating_design | enum? | `Not OK`, `OK`, `Very OK` |
+| rating_vibe | enum? | same as `Unattractive/Attractive/Very Attractive` |
+| overall_score | enum? | `Unattractive`, `Company OK`, `Good Company`, `Dream Company` |
 | notes | text? | |
 | archived | bool | default false |
 | created_at / updated_at | timestamptz | |
 
-> **Catatan desain:** field rating (`branding`, `product`, `design`, `vibe`, `overall`) **opsional** dan tidak dipakai untuk filtering inti. `overall_score` bisa manual atau dihitung (rata-rata rating) — default manual sesuai data lama.
+> **Design note:** the rating fields (`branding`, `product`, `design`, `vibe`, `overall`) are **optional** and are not used for core filtering. `overall_score` may be manual or computed (average of ratings) — default manual, matching the legacy data.
 
 #### `Activity` (log)
-| Field | Tipe | Catatan |
+| Field | Type | Notes |
 |---|---|---|
 | id | uuid | PK |
 | application_id | fk | |
 | type | enum | `created`, `applied`, `stage_changed`, `outcome_changed`, `note`, `interview`, `followup`, `reminder` |
-| from_value / to_value | text? | untuk perubahan stage/outcome |
+| from_value / to_value | text? | for stage/outcome changes |
 | note | text? | |
-| occurred_at | timestamptz | dipakai untuk time-to-response |
+| occurred_at | timestamptz | used for time-to-response |
 
-### 6.2 Kanonik Pipeline
+### 6.2 Canonical Pipeline
 
-Memisahkan **stage** (posisi di proses) dari **outcome** (hasil akhir) menyelesaikan masalah "Overal State kosong".
+Separating **stage** (position in the process) from **outcome** (final result) resolves the "Overal State empty" problem.
 
-**Stage (urut):**
-1. `wishlist` — sudah di-track, belum melamar
-2. `applied` — CV terkirim
-3. `screening` — screening / Interview HRD
-4. `interview` — Interview user / teknis
+**Stage (ordered):**
+1. `wishlist` — tracked, not yet applied
+2. `applied` — CV sent
+3. `screening` — screening / HRD interview
+4. `interview` — user / technical interview
 5. `challenge` — take-home / challenge
-6. `offer` — dapat tawaran
+6. `offer` — received an offer
 
-**Outcome (independen dari stage):**
-- `active` — masih berjalan
-- `rejected` — ditolak (kapan pun)
-- `offer` — tawaran masuk
-- `accepted` — diterima / sepakat
-- `closed` — lowongan ditutup / expired sebelum sempat diproses
-- `withdrawn` — kandidat mundur
+**Outcome (independent of stage):**
+- `active` — still in progress
+- `rejected` — rejected (at any point)
+- `offer` — offer received
+- `accepted` — accepted / agreed
+- `closed` — listing closed / expired before processing
+- `withdrawn` — candidate withdrew
 
-**Mapping dari status Notion lama:**
+**Mapping from legacy Notion status:**
 
-| Status lama | stage | outcome |
+| Legacy status | stage | outcome |
 |---|---|---|
 | Not started | wishlist | active |
 | Sent CV | applied | active |
@@ -193,189 +193,193 @@ Memisahkan **stage** (posisi di proses) dari **outcome** (hasil akhir) menyelesa
 | Done - Challange | challenge | active |
 | Declined | — | rejected |
 | Approved | offer | accepted |
-| (kosong, belum submit) | wishlist | active |
+| (blank, not submitted) | wishlist | active |
 
-### 6.3 Taksonomi (perbaikan dari skema lama)
+### 6.3 Taxonomy (fixes to the legacy schema)
 
-- **Industry** — daftar tertutup nyata: `IT Services`, `Software/SaaS`, `E-commerce`, `Fintech`, `Media`, `Education`, `Healthcare`, `Manufacturing`, `Retail`, `Consulting`, `Agency/Design`, `Telecom`, `Other`. (Menggantikan kolom "Industri" lama yang opsi-nya salah jadi rating.)
-- **Channel** dipisah jadi `source` (info) dan `applied_via` (cara), karena di data lama "From" dan "Send To" tumpang tindih.
-- Semua enum disimpan sebagai kode stabil (`it_services`, `applied`, dst.) dan punya label tampilan; tidak ada free-text untuk field kategorikal.
+- **Industry** — a real closed list: `IT Services`, `Software/SaaS`, `E-commerce`, `Fintech`, `Media`, `Education`, `Healthcare`, `Manufacturing`, `Retail`, `Consulting`, `Agency/Design`, `Telecom`, `Other`. (Replaces the legacy "Industri" column whose options were wrongly ratings.)
+- **Channel** is split into `source` (where the info came from) and `applied_via` (how it was sent), because in the legacy data "From" and "Send To" overlapped.
+- All enums are stored as stable codes (`it_services`, `applied`, etc.) with display labels; no free text for categorical fields.
 
 ---
 
-## 7. Fitur & User Story
+## 7. Features & User Stories
 
-### 7.1 Quick Add Lamaran
-**Story:** Sebagai job seeker, saya ingin menambah lamaran dalam < 30 detik.
-- **AC1** — Tombol "+ Lamaran" di semua halaman; form minimal: Company (autocomplete), Posisi, Stage.
-- **AC2** — Company baru otomatis dibuat bila belum ada; company lama di-reuse.
-- **AC3** — Field lanjutan (channel, rating, notes) opsional / di-collapse.
-- **AC4** — Bisa simpan sebagai `wishlist` dulu, update belakangan.
+### 7.1 Quick Add Application
+**Story:** As a job seeker, I want to add an application in < 30 seconds.
+- **AC1** — "+ Application" button on every page; minimal form: Company (autocomplete), Position, Stage.
+- **AC2** — A new company is created automatically when absent; an existing company is reused.
+- **AC3** — Advanced fields (channel, ratings, notes) are optional / collapsed.
+- **AC4** — Can be saved as `wishlist` first and updated later.
 
 ### 7.2 Table View
-**Story:** Saya ingin melihat & mengedit semua lamaran dalam satu tabel padat.
-- **AC1** — Kolom sesuai skema; bisa show/hide & reorder kolom.
-- **AC2** — Filter multi-kriteria (stage, outcome, source, company_type, size, rentang tanggal).
-- **AC3** — Sort semua kolom; group by (stage / company_type / source).
-- **AC4** — Inline edit sel (select, date, checkbox).
-- **AC5** — Bulk action: ubah stage/outcome, arsip, hapus.
-- **AC6** — Saved views (mis. "Applied", "Perlu follow-up").
-- **AC7** — Virtualized rows; tetap mulus untuk ratusan lamaran.
+**Story:** I want to see and edit all applications in one dense table.
+- **AC1** — Columns match the schema; show/hide and reorder columns.
+- **AC2** — Multi-criteria filtering (stage, outcome, source, company_type, size, date range).
+- **AC3** — Sort all columns; group by (stage / company_type / source).
+- **AC4** — Inline cell editing (select, date, checkbox).
+- **AC5** — Bulk actions: change stage/outcome, archive, delete.
+- **AC6** — Saved views (e.g. "Applied", "Needs follow-up").
+- **AC7** — Virtualized rows; stays smooth for hundreds of applications.
 
 ### 7.3 Board (Kanban)
-- **AC1** — Kolom per `stage`; drag-and-drop mengubah stage + mencatat `Activity`.
-- **AC2** — Kartu ringkas: company, posisi, tanggal, badge outcome, umur lamaran.
-- **AC3** — Filter aktif berlaku di board.
+- **AC1** — One column per `stage`; drag-and-drop changes the stage and records an `Activity`.
+- **AC2** — Compact card: company, position, date, outcome badge, application age.
+- **AC3** — Active filters apply to the board.
 
-### 7.4 Detail Lamaran
-- **AC1** — Semua field + edit inline.
-- **AC2** — Timeline `Activity` kronologis (created → applied → tiap perubahan stage → notes).
-- **AC3** — Link ke job_url & website company.
-- **AC4** — Tombol aksi cepat: "Tandai rejected", "Pindah stage", "Tambah catatan", "Set follow-up".
+### 7.4 Application Detail
+- **AC1** — All fields + inline edit.
+- **AC2** — Chronological `Activity` timeline (created → applied → each stage change → notes).
+- **AC3** — Links to job_url and the company website.
+- **AC4** — Quick action buttons: "Mark rejected", "Move stage", "Add note", "Set follow-up".
 
 ### 7.5 Dashboard
-- **AC1** — KPI: total tracked, applied, active, rejected, offers, accepted.
+- **AC1** — KPIs: total tracked, applied, active, rejected, offers, accepted.
 - **AC2** — Funnel: wishlist → applied → screening → interview → challenge → offer.
-- **AC3** — **Conversion per channel** (bar chart): response rate & offer rate per `source` / `applied_via`.
-- **AC4** — Distribusi per company_type & size.
-- **AC5** — **Follow-up list**: lamaran berstatus `applied`/`active` dengan `applied_date` > 14 hari dan belum ada aktivitas baru.
-- **AC6** — Aktivitas mingguan (lamaran per minggu).
+- **AC3** — **Conversion per channel** (bar chart): response rate and offer rate per `source` / `applied_via`.
+- **AC4** — Distribution per company_type and size.
+- **AC5** — **Follow-up list**: applications in `applied`/`active` with `applied_date` > 14 days and no newer activity.
+- **AC6** — Weekly activity (applications per week).
 
-### 7.6 Import dari Notion
-- **AC1** — Upload CSV export Notion (dan JSON opsional).
-- **AC2** — Layar mapping kolom (auto-detect berdasarkan header Indonesia: Company, Posisi, From, Send To, Status, dll.).
-- **AC3** — Preview + validasi; tampilkan baris yang gagal & alasannya.
-- **AC4** — Terapkan normalisasi: trim spasi, buang baris kosong, perbaiki kapitalisasi enum, map status lama → stage/outcome (lihat 6.2), fix typo umum (Product Desginer→Product Designer, dsb.).
-- **AC5** — Idempoten: import ulang tidak menduplikasi (dedupe by company+position+applied_date).
+### 7.6 Import from Notion
+- **AC1** — Upload a Notion CSV export (and optionally JSON).
+- **AC2** — Column mapping screen (auto-detect based on Indonesian headers: Company, Posisi, From, Send To, Status, etc.).
+- **AC3** — Preview + validation; show failed rows and the reason.
+- **AC4** — Apply normalization: trim whitespace, drop blank rows, fix enum capitalization, map legacy status → stage/outcome (see 6.2), fix common typos (Product Desginer → Product Designer, etc.).
+- **AC5** — Idempotent: re-importing does not duplicate (dedupe by company+position+applied_date).
 
 ### 7.7 Export & Backup
-- **AC1** — Export CSV & JSON lengkap (Company + Application + Activity).
-- **AC2** — Backup otomatis harian (retensi 30 hari) di sisi server.
+- **AC1** — Full CSV & JSON export (Company + Application + Activity).
+- **AC2** — Automatic daily backup (30-day retention) server-side.
 
-### 7.8 Search & Filter Global
-- **AC1** — Search by company/posisi/catatan.
-- **AC2** — Keyboard shortcut (`/` untuk search, `n` untuk new).
+### 7.8 Global Search & Filter
+- **AC1** — Search by company/position/notes.
+- **AC2** — Keyboard shortcuts (`/` for search, `n` for new).
 
 ### 7.9 Settings
-- **AC1** — Ubah daftar enum (channel, industry, tipe) tanpa deploy.
-- **AC2** — Tema terang/gelap.
-- **AC3** — Bahasa (ID default).
-- **AC4** — Konfigurasi follow-up threshold (default 14 hari).
+- **AC1** — Change the enum lists (channel, industry, type) without deploying.
+- **AC2** — Light/dark theme.
+- **AC3** — Language (ID default).
+- **AC4** — Follow-up threshold configuration (default 14 days).
 
 ---
 
-## 8. Analitik — Definisi Metrik
+## 8. Analytics — Metric Definitions
 
-Agar angka konsisten, metrik didefinisikan eksplisit:
+So the numbers stay consistent, metrics are defined explicitly:
 
-- **Applied** = jumlah `Application` dengan `applied_date != null`.
-- **Response rate** = (lamaran yang punya ≥1 aktivitas masuk selain "applied", yaitu screening/interview/challenge/offer/rejected) ÷ Applied.
-- **Interview rate** = lamaran yang pernah mencapai stage ≥ `screening` ÷ Applied.
-- **Offer rate** = lamaran dengan outcome `offer` atau `accepted` ÷ Applied.
-- **Conversion per channel** = metrik di atas, dihitung per nilai `source` (dan/atau `applied_via`).
-- **Median time-to-first-response** = median(`occurred_at` respons pertama − `applied_date`).
-- **Stale application** = `outcome = active`, `stage ∈ {applied}`, dan `now − applied_date > threshold` (default 14 hari) tanpa aktivitas baru.
-- **Weekly cadence** = jumlah `applied_date` per minggu ISO.
+- **Applied** = number of `Application` rows with `applied_date != null`.
+- **Response rate** = (applications with ≥1 inbound activity other than "applied", i.e. screening/interview/challenge/offer/rejected) ÷ Applied.
+- **Interview rate** = applications that ever reached stage ≥ `screening` ÷ Applied.
+- **Offer rate** = applications with outcome `offer` or `accepted` ÷ Applied.
+- **Conversion per channel** = the metrics above, computed per `source` value (and/or `applied_via`).
+- **Median time-to-first-response** = median(`occurred_at` of first response − `applied_date`).
+- **Stale application** = `outcome = active`, `stage ∈ {applied}`, and `now − applied_date > threshold` (default 14 days) with no newer activity.
+- **Weekly cadence** = number of `applied_date` per ISO week.
 
-> Insight pembanding dari data lama (baseline): Techinasia → 7/9 ditolak; Website → 2 approved dari 7; LinkedIn → 6 lamaran belum ada hasil. Dashboard harus bisa mereproduksi insight semacam ini secara otomatis.
+> Baseline insight from the legacy data: Techinasia → 7/9 rejected; Website → 2 approved out of 7; LinkedIn → 6 applications with no result yet. The dashboard must be able to reproduce insights like these automatically.
 
 ---
 
-## 9. UX & Alur Layar
+## 9. UX & Screen Flow
 
-Navigasi utama (sidebar): **Dashboard · Applications · Board · Companies · Insights · Settings**.
+Primary navigation (sidebar): **Dashboard · Applications · Board · Companies · Insights · Settings**.
 
-**Alur kunci — "Apply sekarang":**
-1. Klik `+ Lamaran` (atau `n`).
-2. Ketik nama company → autocomplete / "buat baru".
-3. Isi posisi + source + applied_date (default hari ini).
-4. Simpan → muncul toast + kartu masuk ke Board kolom "Applied".
-5. Opsional: buka detail, tambah job_url & catatan.
+**Key flow — "Apply now":**
+1. Click `+ Application` (or `n`).
+2. Type the company name → autocomplete / "create new".
+3. Fill position + source + applied_date (defaults to today).
+4. Save → toast appears + card enters the "Applied" Board column.
+5. Optional: open detail, add job_url and notes.
 
-**Alur follow-up:**
-1. Dashboard menampilkan "Perlu follow-up (N)".
-2. Klik → tabel terfilter.
-3. Pilih satu → detail → "Tambah catatan follow-up" (tercatat sebagai `Activity`).
+**Follow-up flow:**
+1. Dashboard shows "Needs follow-up (N)".
+2. Click → filtered table.
+3. Select one → detail → "Add follow-up note" (recorded as an `Activity`).
 
-**Prinsip UX:**
-- Keyboard-first untuk power user; touch-friendly untuk mobile.
-- Empty state informatif (termasuk tombol import saat data kosong).
-- Batch operations tidak konfirmasi berlebihan, tapi hapus selalu konfirmasi/undo.
+**UX principles:**
+- Keyboard-first for power users; touch-friendly for mobile.
+- Informative empty states (including an import button when there is no data).
+- Batch operations do not over-confirm, but delete always confirms/undoes.
 
 ---
 
 ## 10. Non-Functional Requirements
 
-- **Performa:** TTFB < 500ms (P95), tabel 500+ baris mulus (virtualized), dashboard load < 1.5s.
-- **Responsif:** breakpoint mobile (≤640), tablet, desktop; board bisa horizontal scroll di mobile.
-- **Aksesibilitas:** WCAG 2.1 AA — kontras, fokus keyboard, label ARIA, navigasi keyboard penuh.
-- **Privasi & keamanan:** data pribadi; akses via autentikasi (passkey/passphrase + session cookie httpOnly); enkripsi in-transit (HTTPS) & at-rest di DB; tidak ada tracking pihak ketiga.
-- **Reliabilitas:** backup harian otomatis; import transaksional (all-or-nothing per batch).
-- **Portabilitas data:** export penuh kapan saja (anti-lock-in).
-- **i18n-ready:** string UI dipisah dari kode; default Indonesia.
-- **Observability:** error logging + basic uptime (opsional Sentry).
+- **Performance:** TTFB < 500ms (P95), 500+ row table smooth (virtualized), dashboard load < 1.5s.
+- **Responsive:** mobile (≤640), tablet, desktop breakpoints; board scrolls horizontally on mobile.
+- **Accessibility:** WCAG 2.1 AA — contrast, keyboard focus, ARIA labels, full keyboard navigation.
+- **Privacy & security:** personal data; access via authentication (passkey/passphrase + httpOnly session cookie); encryption in transit (HTTPS) and at rest in the DB; no third-party tracking.
+- **Reliability:** automatic daily backup; transactional import (all-or-nothing per batch).
+- **Data portability:** full export at any time (anti-lock-in).
+- **i18n-ready:** UI strings separated from code; Indonesian default.
+- **Observability:** error logging + basic uptime (optionally Sentry).
 
 ---
 
-## 11. Stack & Arsitektur (usulan)
+## 11. Stack & Architecture (proposal)
+
+> **Superseded.** This section describes the earlier plan (Next.js fullstack + Drizzle). The
+> authoritative stack is in `docs/superpowers/specs/2026-11-26-job-tracker-design.md`:
+> Go + strict N-layer backend, Next.js frontend, PostgreSQL, containerized behind Caddy.
 
 - **Frontend/Backend:** Next.js (App Router) + TypeScript.
-- **UI:** Tailwind CSS + shadcn/ui; ikon lucide.
-- **Tabel:** TanStack Table (virtualized).
+- **UI:** Tailwind CSS + shadcn/ui; lucide icons.
+- **Table:** TanStack Table (virtualized).
 - **Kanban:** dnd-kit.
-- **Chart:** Recharts.
-- **Validasi:** Zod (shared schema client/server).
-- **DB:** PostgreSQL (Supabase/Neon) + **Drizzle ORM**; migrasi ter-version.
-- **Auth:** single-user — passkey (WebAuthn) atau passphrase + session; tanpa sistem registrasi publik.
-- **Deploy:** Vercel (app) + Postgres terkelola; alternatif self-host (Docker) dengan Postgres lokal.
-- **Testing:** Vitest (unit), Playwright (E2E untuk alur inti: quick-add, import, drag stage).
-- **Struktur domain:** `companies`, `applications`, `activities` + modul `import`, `analytics`.
+- **Charts:** Recharts.
+- **Validation:** Zod (shared client/server schema).
+- **DB:** PostgreSQL (Supabase/Neon) + **Drizzle ORM**; versioned migrations.
+- **Auth:** single-user — passkey (WebAuthn) or passphrase + session; no public registration.
+- **Deploy:** Vercel (app) + managed Postgres; self-host alternative (Docker) with local Postgres.
+- **Testing:** Vitest (unit), Playwright (E2E for core flows: quick-add, import, stage drag).
+- **Domain structure:** `companies`, `applications`, `activities` + `import`, `analytics` modules.
 
-> Alternatif lebih ringan (jika tidak mau cloud DB): SQLite (Turso/libSQL) + Drizzle — cocok untuk single-user, lebih murah, tapi kurang ideal untuk serverless Vercel tanpa Turso.
+> Lighter alternative (if a cloud DB is undesirable): SQLite (Turso/libSQL) + Drizzle — suited to single-user, cheaper, but less ideal for serverless Vercel without Turso.
 
 ---
 
-## 12. Milestone (tanpa estimasi waktu)
+## 12. Milestones (no time estimates)
 
-- **M0 — Fondasi:** scaffold Next.js + TS + Tailwind + shadcn, skema DB + migrasi, auth single-user, CI.
-- **M1 — Core CRUD:** Company & Application CRUD, quick-add, detail + Activity log, pipeline enum.
+- **M0 — Foundation:** scaffold Next.js + TS + Tailwind + shadcn, DB schema + migrations, single-user auth, CI.
+- **M1 — Core CRUD:** Company & Application CRUD, quick-add, detail + Activity log, pipeline enums.
 - **M2 — Views:** Table (filter/sort/group/inline edit) + Board (drag-drop) + search.
-- **M3 — Import:** Notion CSV import dengan mapping, normalisasi, dedupe, preview.
-- **M4 — Dashboard & Insights:** KPI, funnel, conversion per channel, follow-up list.
+- **M3 — Import:** Notion CSV import with mapping, normalization, dedupe, preview.
+- **M4 — Dashboard & Insights:** KPIs, funnel, conversion per channel, follow-up list.
 - **M5 — Polish:** export/backup, settings, dark mode, a11y, E2E tests.
-- **M6 — (Fase 2):** kalender, reminders, dokumen/CV, PWA, analytics lanjutan.
+- **M6 — (Phase 2):** calendar, reminders, documents/CV, PWA, advanced analytics.
 
-**Definisi "MVP selesai":** data Notion lama terimpor 100%, bisa CRUD + lihat table & board, dashboard menampilkan conversion per channel, dan data bisa diexport.
+**Definition of "MVP done":** legacy Notion data 100% imported, CRUD + table & board working, dashboard showing conversion per channel, and data exportable.
 
 ---
 
-## 13. Risiko & Mitigasi
+## 13. Risks & Mitigation
 
-| Risiko | Dampak | Mitigasi |
+| Risk | Impact | Mitigation |
 |---|---|---|
-| Data lama kotor (baris kosong, typo, status ganda) | Import berantakan | Layar normalisasi + preview + dedupe; mapping status terdokumentasi (6.2) |
-| Over-engineering (fitur AI/scraping kepagian) | MVP molor | Kunci scope ke Fase 1; fitur AI/extension di Fase 3 |
-| Single-user auth dianggap "cukup aman" | Data pribadi bocor | Passkey/passphrase + cookie httpOnly + HTTPS; tidak ada URL publik |
-| Enum terlalu kaku | Sulit adaptasi | Enum editable di Settings |
-| Ketergantungan Notion | Lock-in | Import sekali + export penuh; tanpa live sync |
+| Dirty legacy data (blank rows, typos, combined statuses) | Messy import | Normalization screen + preview + dedupe; documented status mapping (6.2) |
+| Over-engineering (AI/scraping too early) | MVP slips | Lock scope to Phase 1; AI/extension features in Phase 3 |
+| Single-user auth assumed "safe enough" | Personal data leaks | Passkey/passphrase + httpOnly cookie + HTTPS; no public URL |
+| Enums too rigid | Hard to adapt | Editable enums in Settings |
+| Notion dependency | Lock-in | One-time import + full export; no live sync |
 
 ---
 
-## 14. Pertanyaan Terbuka
+## 14. Open Questions
 
-1. **Hosting:** cloud (Vercel + Postgres) atau self-host lokal/VPS? (mempengaruhi pilihan DB & auth)
-2. **Multi-user?** Tetap personal single-user, atau nanti mau bisa dibagikan (read-only)?
-3. **AI/scraping:** perlukah parsing JD dari URL & tailoring CV di dekat-dekat MVP, atau tunda ke Fase 3?
-4. **Arti "Approved"** di data lama: lolos screening, dapat offer, atau diterima kerja? (menentukan mapping final)
-5. **Field rating** (branding/product/design/vibe/overall): tetap dipakai untuk keputusan, atau cukup arsip saja?
-6. **Target platform utama:** desktop dulu atau mobile-first?
+1. **Hosting:** cloud (Vercel + Postgres) or self-host local/VPS? (affects DB and auth choices)
+2. **Multi-user?** Stay personal single-user, or later make it shareable (read-only)?
+3. **AI/scraping:** is JD parsing from a URL and CV tailoring needed near MVP, or deferred to Phase 3?
+4. **Meaning of "Approved"** in the legacy data: passed screening, received an offer, or hired? (determines the final mapping)
+5. **Rating fields** (branding/product/design/vibe/overall): still used for decisions, or archival only?
+6. **Primary target platform:** desktop first or mobile-first?
 
 ---
 
-## 15. Success Metrics (untuk produk ini sendiri)
+## 15. Success Metrics (for this product itself)
 
-- **Input cepat:** median waktu tambah 1 lamaran < 30 detik.
-- **Adopsi:** semua 56 perusahaan lama berhasil terimpor tanpa data loss (target 100%).
-- **Konsistensi data:** ≥ 90% lamaran punya `stage`, `outcome`, dan `source` terisi.
-- **Follow-up coverage:** 100% lamaran stale muncul di daftar follow-up.
-- **Insight tersedia:** dashboard bisa menampilkan conversion per channel dalam < 1 menit buka app.
+- **Fast input:** median time to add one application < 30 seconds.
+- **Adoption:** all 56 legacy companies imported with no data loss (100% target).
+- **Data consistency:** ≥ 90% of applications have `stage`, `outcome`, and `source` filled.
+- **Follow-up coverage:** 100% of stale applications appear in the follow-up list.
+- **Insight available:** dashboard can show conversion per channel within < 1 minute of opening the app.
